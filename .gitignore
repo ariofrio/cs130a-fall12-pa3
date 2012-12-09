@@ -1,3 +1,5 @@
 *.o
 /hops
 /test/*.io.run
+test/wikipedia
+test/21-wikipedia.io
