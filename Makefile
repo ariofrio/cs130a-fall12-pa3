@@ -18,7 +18,6 @@ test: hops
 clean:
 	rm -f *.o
 	rm -f hops
-	rm -f test/wikipedia/labels test/wikipedia/edges
 
 test/wikipedia:
 	mkdir -p test/wikipedia
@@ -40,10 +39,26 @@ test/wikipedia/edges: test/wikipedia
 		grep -v '^#' | grep -v ' Category:' > $@
 
 test/21-wikipedia.io: test/wikipedia/labels test/wikipedia/edges
-	echo "> `wc -l test/wikipedia/labels | awk '{print $$1}'`" > $@
+	echo "> verbose" > $@
+	echo "> `wc -l test/wikipedia/labels | awk '{print $$1}'`" >> $@
 	sed 's/^/> /' test/wikipedia/labels >> $@
 	echo "> `wc -l test/wikipedia/edges | awk '{print $$1}'`" >> $@
 	sed 's/^/> /' test/wikipedia/edges >> $@
 	echo '> 0' >> $@
+	echo '> Chemistry Greek' >> $@
+	echo '< 3' >> $@
+	echo '< Greek Greek_alphabet Astronomy Chemistry ' >> $@
+	echo '> Computer Wizard' >> $@
+	echo '< -1' >> $@
+	echo '< ' >> $@
+	echo '> Computer Magic' >> $@
+	echo '< -1' >> $@
+	echo '< ' >> $@
+	echo '> Computer Greek' >> $@
+	echo '< 4' >> $@
+	echo '< Greek Ancient_Greek_philosophy Science Computer_science Computer ' >> $@
+	echo '> Computer Pencil' >> $@
+	echo '< 3' >> $@
+	echo '< Pencil Writing Painting Computer' >> $@
 
 wikipedia: test/21-wikipedia.io
