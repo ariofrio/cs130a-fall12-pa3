@@ -1,3 +1,4 @@
+> verbose
 > 6
 > andres
 > may
@@ -14,6 +15,12 @@
 > crystal follows andres
 > may follows dennis
 > dustin follows dennis
+< andres: crystal
+< may: crystal
+< dustin: may
+< crystal: andres eric
+< eric: andres
+< dennis: may dustin
 > 5
 > dennis andres
 < 3
@@ -25,10 +32,3 @@
 < 0
 > dustin eric
 < 3
-> _ _ print
-< andres: crystal
-< may: crystal
-< dustin: may
-< crystal: andres eric
-< eric: andres
-< dennis: may dustin

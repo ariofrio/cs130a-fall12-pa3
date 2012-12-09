@@ -6,45 +6,50 @@
 #include "graph.h"
 
 using std::vector;
-using std::string; using std::stringstream;
+using std::string;
 using std::cin; using std::cout; using std::cerr;
 using std::endl;
 
+// (we are smart, we are kind, we are important)
 int main(int argc, char** argv) {
   graph graph;
 
-  while(!cin.eof()) {
-    string line; getline(cin, line);
-
-    // split into tokens
-    vector<string> tokens;
-    {
-      stringstream ss(line);
-      string buf;
-      while(ss >> buf) {
-        tokens.push_back(buf);
-      }
+  int count;
+  bool verbose = false;
+  {
+    string word;
+    cin >> word;
+    if(word.compare("verbose") == 0) {
+      verbose = true;
+      cin >> count;
+    } else {
+      count = strtol(word.c_str(), NULL, 10);
     }
+  }
 
-    if(tokens.size() == 1 &&
-       strtol(line.c_str(), NULL, 10) != 0) {
-      // ignore, we are smart: we don't need no numbers!
-      // (we are smart, we are kind, we are important)
-      ;
-    } else if(line.compare("_ _ print") == 0) {
-      graph.print();
-    } else if(tokens.size() == 1) { // add new node
-      // add new node
-      graph.insert(tokens[0]);
-    } else if(tokens.size() == 3 && 
-              tokens[1].compare("follows") == 0) {
-      // add new connection
-      graph.connect(tokens[2], tokens[0]);
-    } else if(tokens.size() == 2) {
-      // find minimum hops
-      cout << graph.minimum_hops(tokens[0], tokens[1])
-           << endl;
+  while(count-- > 0) {
+    string label;
+    cin >> label;
+    graph.insert(label);
+  }
+
+  cin >> count;
+  while(count-- > 0) {
+    string follower, verb, followed;
+    cin >> follower >> verb >> followed;
+    if(!graph.connect(followed, follower)) {
+      cerr << "either " << followed << " or " << follower <<
+        " not found in graph" << endl;
     }
+  }
+
+  if(verbose) graph.print();
+
+  cin >> count;
+  while(count-- > 0) {
+    string source, destination;
+    cin >> source >> destination;
+    cout << graph.minimum_hops(source, destination) << endl;
   }
 }
 
