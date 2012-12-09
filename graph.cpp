@@ -1,36 +1,60 @@
 #include "graph.h"
 #include <iostream>
+#include <queue>
+#include <vector>
 
 using std::string;
+using std::vector;
+using std::queue;
 
-graph::node* graph::find(const string& label) {
+int graph::find(const string& label) {
   // TODO use a std::map to search for this?
-  for(node* node : nodes) {
-    if(label.compare(node->label) == 0) return node;
+  for(int i=0; i<nodes.size(); i++) {
+    if(label.compare(nodes[i]->label) == 0) return i;
   }
-  return nullptr;
+  return -1;
 }
 
-graph::node* graph::insert(const string& label) {
-  node* p = new node(label);
-  nodes.push_back(p);
-  return p;
+int graph::insert(const string& label) {
+  nodes.push_back(new node(label));
+  return nodes.size() - 1;
 }
 
-bool graph::connect(node* p, node* q) {
-  if(p == nullptr || q == nullptr) {
+bool graph::connect(int p, int q) {
+  if(p == -1 || q == -1) {
     return false;
   } else {
-    p->outgoing.push_back(q);
+    nodes[p]->outgoing.push_back(q);
     return true;
   }
 }
 
-int graph::minimum_hops(node* p, node* q) {
-  vector<bool> known(nodes.size());
-  vector<int> distance(nodes.size());
-  vector<node*> predecessor(nodes.size());
+int graph::minimum_hops(int source, int destination) {
+  if(source == -1 || destination == -1) return -2;
 
+  vector<bool> known(nodes.size());
+  vector<int> distance(nodes.size(), -1);
+  vector<int> predecessor(nodes.size(), -1);
+  queue<int> queue;
+  
+  queue.push(source);
+  distance[source] = 0;
+
+  while(!queue.empty()) {
+    int p = queue.front(); queue.pop();
+    known[p] = true;
+
+    int new_distance = 1 + distance[p];
+    for(int q : nodes[p]->outgoing) {
+      if(distance[q] == -1 || new_distance < distance[q]) {
+        distance[q] = new_distance;
+        predecessor[q] = p;
+      }
+      if(!known[q]) queue.push(q);
+    }
+  }
+
+  return distance[destination];
 }
 
 void graph::print() const {
@@ -38,8 +62,8 @@ void graph::print() const {
 
   for(node* p : nodes) {
     cout << p->label << ':';
-    for(node* q : p->outgoing) {
-      cout << ' ' << q->label;
+    for(int id : p->outgoing) {
+      cout << ' ' << nodes[id]->label;
     }
     cout << endl;
   }

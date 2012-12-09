@@ -26,9 +26,9 @@
 > dustin eric
 < 3
 > _ _ print
-< andres: crystal eric
-< may: dustin dennis
-< dustin: dennis
-< crystal: may andres
-< eric: crystal
-< dennis: 
+< andres: crystal
+< may: crystal
+< dustin: may
+< crystal: andres eric
+< eric: andres
+< dennis: may dustin

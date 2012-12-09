@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
     } else if(tokens.size() == 3 && 
               tokens[1].compare("follows") == 0) {
       // add new connection
-      graph.connect(tokens[0], tokens[2]);
+      graph.connect(tokens[2], tokens[0]);
     } else if(tokens.size() == 2) {
       // find minimum hops
       cout << graph.minimum_hops(tokens[0], tokens[1])

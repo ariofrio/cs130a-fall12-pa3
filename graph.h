@@ -10,21 +10,20 @@ using std::vector;
 class graph {
 public:
   struct node {
-    string label;
-    vector<node*> outgoing;
-    
     node(const string& label) : label(label) {}
+
+    string label;
+    vector<int> outgoing;
   };
 
-  node* find(const string& label);
-  node* insert(const string& label);
+  int insert(const string& label);
 
-  bool connect(node* p, node* q);
   bool connect(const string& p, const string& q) {
     return connect(find(p), find(q));
   }
 
-  int minimum_hops(node* p, node* q);
+  // minimum hops between p and q, return -1 if not connected
+  // return -2 if either p or q not in graph
   int minimum_hops(const string& p, const string& q) {
     return minimum_hops(find(p), find(q));
   }
@@ -33,6 +32,11 @@ public:
 
 private:
   vector<node*> nodes;
+
+  int find(const string& label);
+
+  bool connect(int p, int q);
+  int minimum_hops(int p, int q);
 
 };
 
