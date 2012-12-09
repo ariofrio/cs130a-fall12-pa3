@@ -34,8 +34,8 @@ bool graph::connect(int p, int q) {
   }
 }
 
-int graph::minimum_hops(int source, int destination) {
-  if(source == -1 || destination == -1) return -2;
+vector<string> graph::shortest_path(int source, int destination) {
+  if(source == -1 || destination == -1) return vector<string>();
 
   vector<bool> known(nodes.size());
   vector<int> distance(nodes.size(), -1);
@@ -59,7 +59,18 @@ int graph::minimum_hops(int source, int destination) {
     }
   }
 
-  return distance[destination];
+  if(distance[destination] == -1) return vector<string>();
+
+  vector<string> path; path.reserve(distance[destination]+1);
+  for(int p = destination; p != source; p = predecessor[p]) {
+    path.push_back(nodes[p]->label);
+  }
+  path.push_back(nodes[source]->label);
+  return path;
+}
+
+int graph::minimum_hops(int source, int destination) {
+  return shortest_path(source, destination).size() - 1;
 }
 
 void graph::print() const {

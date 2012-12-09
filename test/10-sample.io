@@ -1,4 +1,4 @@
-> verbose
+> verbose+print
 
 > 6
 > andres
@@ -28,11 +28,16 @@
 > 5
 > dennis andres
 < 3
+< andres crystal may dennis
 > crystal andres
 < 1
+< andres crystal
 > may dennis
 < -1
+< 
 > dustin dustin
 < 0
+< dustin
 > dustin eric
 < 3
+< eric crystal may dustin

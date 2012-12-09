@@ -15,11 +15,15 @@ int main(int argc, char** argv) {
   graph graph;
 
   int count;
-  bool verbose = false;
+  bool verbose = false, print = false;
   {
     string word;
     cin >> word;
-    if(word.compare("verbose") == 0) {
+    if(word.compare("verbose+print") == 0) {
+      verbose = true;
+      print = true;
+      cin >> count;
+    } else if(word.compare("verbose") == 0) {
       verbose = true;
       cin >> count;
     } else {
@@ -43,13 +47,21 @@ int main(int argc, char** argv) {
     }
   }
 
-  if(verbose) graph.print();
+  if(print) graph.print();
 
   cin >> count;
   while(count-- > 0) {
     string source, destination;
     cin >> source >> destination;
     cout << graph.minimum_hops(source, destination) << endl;
+    if(verbose) {
+      vector<string> path =
+        graph.shortest_path(source, destination);
+      for(const string& label : path) {
+        cout << label << ' ';
+      }
+      cout << endl;
+    }
   }
 }
 
