@@ -3,9 +3,11 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 using std::string;
 using std::vector;
+using std::map;
 
 class graph {
 public:
@@ -32,6 +34,7 @@ public:
 
 private:
   vector<node*> nodes;
+  map<string, int> labels;
 
   int find(const string& label);
 

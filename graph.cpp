@@ -2,22 +2,27 @@
 #include <iostream>
 #include <queue>
 #include <vector>
+#include <map>
 
 using std::string;
 using std::vector;
 using std::queue;
+using std::map;
 
 int graph::find(const string& label) {
-  // TODO use a std::map to search for this?
-  for(int i=0; i<nodes.size(); i++) {
-    if(label.compare(nodes[i]->label) == 0) return i;
+  if(labels.count(label)) {
+    return labels[label];
+  } else {
+    return -1;
   }
-  return -1;
 }
 
 int graph::insert(const string& label) {
   nodes.push_back(new node(label));
-  return nodes.size() - 1;
+
+  int id = nodes.size() - 1;
+  labels[label] = id;
+  return id;
 }
 
 bool graph::connect(int p, int q) {
