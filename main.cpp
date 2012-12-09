@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
       // ignore, we are smart: we don't need no numbers!
       // (we are smart, we are kind, we are important)
       ;
-    } else if(line.compare("print") == 0) {
+    } else if(line.compare("_ print") == 0) {
       graph.print();
     } else if(tokens.size() == 1) { // add new node
       // add new node

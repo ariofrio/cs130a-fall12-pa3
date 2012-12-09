@@ -25,7 +25,7 @@
 < 0
 > dustin eric
 < 3
-> print
+> _ print
 < andres: crystal eric
 < may: dustin dennis
 < dustin: dennis
