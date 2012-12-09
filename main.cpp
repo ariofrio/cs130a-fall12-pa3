@@ -49,10 +49,13 @@ int main(int argc, char** argv) {
 
   if(print) graph.print();
 
-  cin >> count;
-  while(count-- > 0) {
+  cin >> count; // ignored
+  while(!cin.eof()) {
     string source, destination;
     cin >> source >> destination;
+    if(source.length() == 0 || destination.length() == 0)
+      continue;
+
     cout << graph.minimum_hops(source, destination) << endl;
     if(verbose) {
       vector<string> path =
