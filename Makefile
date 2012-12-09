@@ -5,7 +5,7 @@ SRC=\
      main.o \
 		 graph.o
 
-.PHONY: all test clean
+.PHONY: all test clean wikipedia
 
 all: hops
 
@@ -23,21 +23,21 @@ clean:
 test/wikipedia:
 	mkdir -p test/wikipedia
 	cd test/wikipedia; \
-		wget http://downloads.dbpedia.org/3.8/es/labels_en_uris_es.nt.bz2 & \
-		wget http://downloads.dbpedia.org/3.8/es/page_links_en_uris_es.nt.bz2; \
+		wget http://downloads.dbpedia.org/3.8/el/labels_en_uris_el.nt.bz2 & \
+		wget http://downloads.dbpedia.org/3.8/el/page_links_en_uris_el.nt.bz2; \
 		wait
 
 test/wikipedia/labels: test/wikipedia
-	bzcat test/wikipedia/labels_en_uris_es.nt.bz2 | \
+	bzcat test/wikipedia/labels_en_uris_el.nt.bz2 | \
 		grep -oP '(?<=<http://dbpedia.org/resource/)[^>]+' | \
 		grep -v '^#' > $@
 
 test/wikipedia/edges: test/wikipedia
-	bzcat test/wikipedia/page_links_en_uris_es.nt.bz2 | \
+	bzcat test/wikipedia/page_links_en_uris_el.nt.bz2 | \
 		sed -e 's-<http://dbpedia.org/resource/--g' \
 				-e 's-> <http://dbpedia.org/ontology/wikiPageWikiLink> - follows -' \
 				-e 's-> .--' | \
-		grep -v '^#' > $@
+		grep -v '^#' | grep -v ' Category:' > $@
 
 test/21-wikipedia.io: test/wikipedia/labels test/wikipedia/edges
 	echo "> `wc -l test/wikipedia/labels | awk '{print $$1}'`" > $@
@@ -46,3 +46,4 @@ test/21-wikipedia.io: test/wikipedia/labels test/wikipedia/edges
 	sed 's/^/> /' test/wikipedia/edges >> $@
 	echo '> 0' >> $@
 
+wikipedia: test/21-wikipedia.io
