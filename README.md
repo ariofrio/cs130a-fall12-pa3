@@ -19,5 +19,6 @@ See the programming assignment on the [CS 130A course website][pdf].
 
 ## Testing
 
+    make wikipedia # optional, downloads data from dbpedia.org
     make test
 
