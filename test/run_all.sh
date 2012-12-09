@@ -24,7 +24,7 @@ for io in $TESTDIR/*.io; do
   cat $io | grepin | $prog >& $io.run
 
   # compare run file with expected file, ignoring input
-  output=$(sed -e 's/^< //' -e 's/^>/]/' $io | grep -v '^] ' | 
+  output=$(egrep '^< ' $io | sed 's/^< //' | 
            sdiff --ignore-space-change \
              --width=$(tput cols) - $io.run)
   this_status=$?

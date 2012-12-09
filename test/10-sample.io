@@ -1,4 +1,5 @@
 > verbose
+
 > 6
 > andres
 > may
@@ -6,6 +7,7 @@
 > crystal
 > eric
 > dennis
+
 > 8
 > may follows dustin
 > andres follows crystal
@@ -15,12 +17,14 @@
 > crystal follows andres
 > may follows dennis
 > dustin follows dennis
+
 < andres: crystal
 < may: crystal
 < dustin: may
 < crystal: andres eric
 < eric: andres
 < dennis: may dustin
+
 > 5
 > dennis andres
 < 3
