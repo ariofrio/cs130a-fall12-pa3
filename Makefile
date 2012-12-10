@@ -19,20 +19,21 @@ clean:
 	rm -f *.o
 	rm -f hops
 
-test/wikipedia:
+test/wikipedia/labels_en_uris_el.nt.bz2:
 	mkdir -p test/wikipedia
-	cd test/wikipedia; \
-		wget http://downloads.dbpedia.org/3.8/el/labels_en_uris_el.nt.bz2 & \
-		wget http://downloads.dbpedia.org/3.8/el/page_links_en_uris_el.nt.bz2; \
-		wait
+	cd test/wikipedia && wget http://downloads.dbpedia.org/3.8/el/labels_en_uris_el.nt.bz2
 
-test/wikipedia/labels: test/wikipedia
-	bzcat test/wikipedia/labels_en_uris_el.nt.bz2 | \
+test/wikipedia/page_links_en_uris_el.nt.bz2:
+	mkdir -p test/wikipedia
+	cd test/wikipedia && wget http://downloads.dbpedia.org/3.8/el/page_links_en_uris_el.nt.bz2
+
+test/wikipedia/labels: test/wikipedia/labels_en_uris_el.nt.bz2
+	bzcat $< | \
 		grep -oP '(?<=<http://dbpedia.org/resource/)[^>]+' | \
 		grep -v '^#' > $@
 
-test/wikipedia/edges: test/wikipedia
-	bzcat test/wikipedia/page_links_en_uris_el.nt.bz2 | \
+test/wikipedia/edges: test/wikipedia/page_links_en_uris_el.nt.bz2
+	bzcat $< | \
 		sed -e 's-<http://dbpedia.org/resource/--g' \
 				-e 's-> <http://dbpedia.org/ontology/wikiPageWikiLink> - follows -' \
 				-e 's-> .--' | \
@@ -62,3 +63,8 @@ test/21-wikipedia.io: test/wikipedia/labels test/wikipedia/edges
 	echo '< Pencil Writing Painting Computer' >> $@
 
 wikipedia: test/21-wikipedia.io
+
+clean-wikipedia:
+	rm -rf test/wikipedia
+	rm -f test/21-wikipedia.io
+
