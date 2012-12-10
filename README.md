@@ -6,8 +6,6 @@
   </a>
 </h1>
 
-Important TODO: replace STL vector and dequeue with custom implementations!
-
 See the programming assignment on the [CS 130A course website][pdf].
 
   [pdf]: http://cs.ucsb.edu/~koc/cs130a/hwex/pa3.pdf
